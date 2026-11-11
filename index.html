@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI in Education: Using It Responsibly</title>
+<style>
+:root{
+  --bg:#F6FAF9; --surface:#FFFFFF; --ink:#12302E; --muted:#4A6460; --brand:#0F4C4A; --brand-ink:#FFFFFF;
+  --tint:#DDEFEB; --line:#C5D9D4; --accent:#F2B134; --stop:#B3261E; --care:#9A6200; --go:#1E7A46;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1D1C; --surface:#142928; --ink:#E4F1EE; --muted:#9DB8B3; --brand:#7FD1C4; --brand-ink:#0D1D1C;
+    --tint:#1B3533; --line:#2C4846; --accent:#F2B134; --stop:#FF8A80; --care:#F2B134; --go:#6FD59B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1D1C; --surface:#142928; --ink:#E4F1EE; --muted:#9DB8B3; --brand:#7FD1C4; --brand-ink:#0D1D1C;
+  --tint:#1B3533; --line:#2C4846; --accent:#F2B134; --stop:#FF8A80; --care:#F2B134; --go:#6FD59B; color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 Calibri,"Segoe UI",Arial,sans-serif}
+h1,h2,h3{font-family:Cambria,Georgia,"Times New Roman",serif;line-height:1.15;margin:0 0 .5em;color:var(--ink)}
+h1{font-size:clamp(2.4rem,6vw,4.2rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,3.6vw,2.4rem)}
+h3{font-size:1.3rem}
+p{margin:0 0 1em;max-width:68ch}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--brand);color:var(--brand-ink);padding:.6rem 1rem;z-index:20}
+.skip:focus{left:1rem;top:1rem}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
+header.top{border-bottom:1px solid var(--line);background:var(--surface)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:.8rem;padding-bottom:.8rem}
+.brand{font-family:Cambria,Georgia,serif;font-weight:700;color:var(--brand);text-decoration:none;font-size:1.1rem}
+nav{display:flex;gap:1.1rem;flex-wrap:wrap;align-items:center}
+nav a{text-decoration:none;color:var(--ink);font-size:.95rem;padding:.25rem 0;border-bottom:2px solid transparent}
+nav a:hover{border-color:var(--accent)}
+.themebtn{font:inherit;font-size:.9rem;background:none;border:1px solid var(--line);color:var(--ink);padding:.3rem .7rem;border-radius:999px;cursor:pointer}
+.hero{padding:4.5rem 0 3.5rem}
+.hero p.lead{font-size:1.3rem;color:var(--muted);max-width:56ch}
+.hero .actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.6rem}
+.btn{display:inline-block;padding:.75rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;border:2px solid var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink)}
+.btn.ghost{color:var(--brand)}
+section{padding:3.5rem 0;border-top:1px solid var(--line)}
+.split{display:grid;grid-template-columns:1fr 1.4fr;gap:2.5rem;align-items:start}
+.facts{margin:0;padding:0;list-style:none;display:grid;gap:1rem}
+.facts li{background:var(--tint);padding:1rem 1.2rem;border-radius:10px}
+.facts strong{display:block;font-family:Cambria,Georgia,serif;font-size:1.15rem}
+/* pillar tabs */
+.tabs{display:grid;grid-template-columns:230px 1fr;gap:2rem;margin-top:1.5rem}
+.tablist{display:flex;flex-direction:column;gap:.4rem}
+.tab{font:inherit;text-align:left;background:none;border:1px solid var(--line);color:var(--ink);padding:.8rem 1rem;border-radius:10px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:700}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.6rem}
+.panel[hidden]{display:none}
+.panel ul,.panel ol{padding-left:1.2rem;margin:0 0 1rem;max-width:68ch}
+.panel li{margin-bottom:.55rem}
+.note{font-size:.95rem;color:var(--muted);border-left:4px solid var(--accent);padding-left:.9rem;margin-top:1rem;max-width:68ch}
+/* paste check */
+.check{display:grid;gap:.6rem;margin-top:1.4rem;max-width:760px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+summary{cursor:pointer;padding:.9rem 1.1rem;list-style:none;display:flex;align-items:center;gap:.8rem;font-weight:700}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;font-size:1.4rem;color:var(--muted)}
+details[open] summary::after{content:"\2212"}
+details .why{padding:0 1.1rem 1rem 3.1rem;margin:0}
+.verdict{font-size:.85rem;font-weight:700;padding:.15rem .6rem;border-radius:999px;border:1.5px solid currentColor;white-space:nowrap}
+.stop{color:var(--stop)}.care{color:var(--care)}.go{color:var(--go)}
+.dot{width:14px;height:14px;border-radius:50%;background:currentColor;flex:none}
+dl{margin:1.4rem 0 0;display:grid;grid-template-columns:max-content 1fr;gap:.7rem 1.6rem;max-width:820px}
+dt{font-weight:700;font-family:Cambria,Georgia,serif;color:var(--brand)}
+dd{margin:0}
+.links li{margin-bottom:.4rem}
+footer{border-top:1px solid var(--line);padding:2rem 0 2.5rem;color:var(--muted);font-size:.95rem;background:var(--surface)}
+footer p{max-width:80ch}
+@media (max-width:760px){
+  body{font-size:17px}
+  .split,.tabs{grid-template-columns:1fr}
+  .tablist{flex-direction:row;flex-wrap:wrap}
+  dl{grid-template-columns:1fr;gap:.2rem}
+  dd{margin-bottom:.8rem}
+  .hero{padding:3rem 0 2.5rem}
+  details .why{padding-left:1.1rem}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">AI in Education</a>
+    <nav aria-label="Main">
+      <a href="#why">Why it matters</a>
+      <a href="#pillars">Risks and rules</a>
+      <a href="#paste">Before you paste</a>
+      <a href="#guide">Your guide</a>
+      <a href="#terms">Key terms</a>
+      <button class="themebtn" id="themeBtn" type="button" aria-pressed="false">Dark mode</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap hero" id="top">
+  <h1>Use AI to learn, without giving up your data or your voice.</h1>
+  <p class="lead">A plain-language guide to the security, legal, and ethical questions behind AI tools in schools, for students and for the institutions that serve them.</p>
+  <div class="actions">
+    <a class="btn primary" href="#pillars">Read the three big questions</a>
+    <a class="btn ghost" href="#paste">Try the data check</a>
+  </div>
+</div>
+
+<section id="why">
+  <div class="wrap split">
+    <div>
+      <h2>Why this matters now</h2>
+      <p>AI tools can explain a hard concept, draft an outline, or translate a reading. They can also store what you type, repeat confident mistakes, and blur the line between your work and a machine’s.</p>
+      <p>Using them well starts with knowing three things: where your information goes, which rules apply to you, and what is fair to ask a tool to do.</p>
+    </div>
+    <ul class="facts">
+      <li><strong>Your inputs may be stored.</strong>Many AI services keep prompts, and some may use them to improve their models, depending on the settings and plan. Check each tool’s policy.</li>
+      <li><strong>Answers can be wrong.</strong>AI can state false information fluently, including invented sources. Verify anything that matters.</li>
+      <li><strong>Rules vary by school and place.</strong>Course policies, privacy laws, and tool terms of service all differ. When unsure, ask.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="pillars">
+  <div class="wrap">
+    <h2>Three big questions</h2>
+    <p>Pick one to explore. Each covers what can go wrong and what to do about it.</p>
+    <div class="tabs" data-tabs>
+      <div class="tablist" role="tablist" aria-label="Responsible AI topics">
+        <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true">Cybersecurity</button>
+        <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">Legal considerations</button>
+        <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Ethical use</button>
+      </div>
+      <div>
+        <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+          <h3>Is my information safe?</h3>
+          <ul>
+            <li><strong>Data leakage:</strong> anything typed into a public AI tool leaves your control. Keep personal, financial, and confidential details out of prompts.</li>
+            <li><strong>Account security:</strong> use a unique password and multi-factor authentication on every AI account.</li>
+            <li><strong>Prompt injection:</strong> text hidden in a web page or document can try to steer an AI tool that reads it. Be careful when asking AI to process content you don’t trust.</li>
+            <li><strong>Phishing and deepfakes:</strong> AI makes convincing fake emails, voices, and images easier to produce. Verify unexpected requests through a second channel.</li>
+            <li><strong>Extensions and plug-ins:</strong> third-party add-ons may request broad access to your data. Install only what you need from sources you trust.</li>
+          </ul>
+          <p class="note">For institutions: review vendors before adoption, limit who can access what, and ask where data is stored, how long it is kept, and whether it is used for model training.</p>
+        </div>
+        <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+          <h3>Which rules apply?</h3>
+          <ul>
+            <li><strong>Student privacy:</strong> in the United States, FERPA protects student education records. Schools generally cannot share identifiable records with a tool or vendor without proper authority or agreements.</li>
+            <li><strong>Children’s data:</strong> COPPA limits how online services collect personal information from children under 13. Many AI tools also set their own minimum ages.</li>
+            <li><strong>International privacy law:</strong> the EU’s GDPR and similar laws elsewhere govern how personal data is collected, used, and kept, and can apply to institutions or users abroad.</li>
+            <li><strong>Copyright and ownership:</strong> who owns AI-assisted work, and whether training on existing works is allowed, is still being decided in courts and legislatures. Read each tool’s terms and cite your use.</li>
+            <li><strong>Academic integrity:</strong> your course and school policies decide what AI help is allowed. Rules can differ class by class.</li>
+            <li><strong>Accessibility:</strong> institutions may have legal duties to make technology usable for people with disabilities, so tools should be checked for accessibility.</li>
+          </ul>
+          <p class="note">This site is informational and is not legal advice. Laws change and depend on where you live. Check official sources or ask your school’s legal or compliance office.</p>
+        </div>
+        <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+          <h3>What is fair and honest?</h3>
+          <ul>
+            <li><strong>Be transparent:</strong> say when and how you used AI, in the way your instructor or institution asks.</li>
+            <li><strong>Keep thinking:</strong> use AI to support learning, not replace it. If a tool does the reasoning, you miss the practice.</li>
+            <li><strong>Watch for bias:</strong> AI reflects patterns in its training data and can treat people or perspectives unfairly. Question one-sided or stereotyped outputs.</li>
+            <li><strong>Check accuracy:</strong> confirm facts, quotes, and citations against reliable sources before relying on them.</li>
+            <li><strong>Think about access:</strong> not every student has the same tools, devices, or support. Policies should avoid giving some students an unfair advantage or disadvantage.</li>
+            <li><strong>Keep a human in the loop:</strong> decisions about grades, discipline, or admissions should not be left to AI alone.</li>
+          </ul>
+          <p class="note">A good test: could you explain to your instructor, in your own words, what you submitted and how you made it?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="paste">
+  <div class="wrap">
+    <h2>Before you paste: a quick data check</h2>
+    <p>Open each example to see how careful to be. The colored dot shows the level: stop, take care, or generally fine.</p>
+    <div class="check">
+      <details><summary><span class="dot stop"></span>A classmate’s name and grades <span class="verdict stop">Don’t paste</span></summary>
+        <p class="why">Identifiable student information about other people is private and may be protected by law. Remove names and details, or don’t share it at all.</p></details>
+      <details><summary><span class="dot stop"></span>Passwords, ID numbers, or bank details <span class="verdict stop">Don’t paste</span></summary>
+        <p class="why">No AI task needs these. Keeping them out of prompts avoids exposing them if a service stores or leaks data.</p></details>
+      <details><summary><span class="dot care"></span>Your own essay draft <span class="verdict care">Take care</span></summary>
+        <p class="why">Check your course policy first. Remove personal details, and know whether the tool keeps or reuses what you submit.</p></details>
+      <details><summary><span class="dot care"></span>A work or school document marked internal <span class="verdict care">Take care</span></summary>
+        <p class="why">Confidential material usually needs approval. Ask whether your organization has an approved AI tool for this.</p></details>
+      <details><summary><span class="dot go"></span>A general question like “Explain photosynthesis” <span class="verdict go">Generally fine</span></summary>
+        <p class="why">No personal or sensitive data is involved. Still verify the answer against your textbook or another reliable source.</p></details>
+      <details><summary><span class="dot go"></span>Public information with no personal details <span class="verdict go">Generally fine</span></summary>
+        <p class="why">Public text is lower risk, but copyright still applies, and you should still check what the tool says back.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="guide">
+  <div class="wrap">
+    <h2>Your responsible-use guide</h2>
+    <p>Choose who the guide is for.</p>
+    <div class="tabs" data-tabs>
+      <div class="tablist" role="tablist" aria-label="Audience">
+        <button class="tab" role="tab" id="g1t" aria-controls="g1" aria-selected="true">For students</button>
+        <button class="tab" role="tab" id="g2t" aria-controls="g2" aria-selected="false" tabindex="-1">For institutions</button>
+      </div>
+      <div>
+        <div class="panel" role="tabpanel" id="g1" aria-labelledby="g1t">
+          <h3>Five habits for students</h3>
+          <ol>
+            <li>Read your course’s AI policy before you start, and ask if it’s unclear.</li>
+            <li>Keep private details out of prompts: yours and other people’s.</li>
+            <li>Treat answers as drafts. Check facts and sources yourself.</li>
+            <li>Do the thinking. Use AI to explain, quiz, or give feedback, not to do the assignment for you.</li>
+            <li>Be open about your use and keep notes on how you used it.</li>
+          </ol>
+        </div>
+        <div class="panel" role="tabpanel" id="g2" aria-labelledby="g2t" hidden>
+          <h3>Six steps for schools and colleges</h3>
+          <ol>
+            <li>Write a clear, plain-language AI policy and update it on a schedule.</li>
+            <li>Review vendors for security, privacy terms, data retention, and accessibility before approval.</li>
+            <li>Provide approved tools so students and staff aren’t pushed toward unvetted ones.</li>
+            <li>Train students and staff on privacy, accuracy, and academic integrity.</li>
+            <li>Keep human review in any decision that affects a student’s record or future.</li>
+            <li>Collect feedback, watch for unequal access, and adjust.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap">
+    <h2>Key terms</h2>
+    <dl>
+      <dt>Generative AI</dt><dd>Software that produces new text, images, audio, or code from a prompt.</dd>
+      <dt>Prompt</dt><dd>The instruction or question you give an AI tool.</dd>
+      <dt>Hallucination</dt><dd>A confident answer that is false or made up, such as a fake citation.</dd>
+      <dt>Training data</dt><dd>The material a model learned from. It shapes what the model knows and where its biases come from.</dd>
+      <dt>Personal data</dt><dd>Information that can identify a person, such as a name, ID number, or grades.</dd>
+      <dt>Multi-factor authentication</dt><dd>A second proof of identity, like a code on your phone, in addition to a password.</dd>
+      <dt>Algorithmic bias</dt><dd>Systematic unfairness in how a system treats people or groups.</dd>
+    </dl>
+    <h3 style="margin-top:2.2rem">Official sources</h3>
+    <ul class="links">
+      <li><a href="https://studentprivacy.ed.gov" rel="noopener">U.S. Department of Education: Student Privacy (FERPA)</a></li>
+      <li><a href="https://www.ftc.gov/business-guidance/privacy-security/childrens-privacy" rel="noopener">FTC: Children’s Online Privacy (COPPA)</a></li>
+      <li><a href="https://gdpr.eu" rel="noopener">GDPR.eu: overview of EU data protection law</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>AI in Education Informative Website. A student-led project to share accessible guidance on using AI responsibly in learning.</p>
+    <p>This content is for general information and is not legal advice.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.querySelectorAll('[data-tabs]').forEach(function(group){
+    var tabs=[].slice.call(group.querySelectorAll('[role="tab"]'));
+    function select(t){
+      tabs.forEach(function(x){
+        var on=x===t;
+        x.setAttribute('aria-selected',on);
+        x.tabIndex=on?0:-1;
+        document.getElementById(x.getAttribute('aria-controls')).hidden=!on;
+      });
+    }
+    tabs.forEach(function(t,i){
+      t.addEventListener('click',function(){select(t)});
+      t.addEventListener('keydown',function(e){
+        var n=null;
+        if(e.key==='ArrowDown'||e.key==='ArrowRight') n=tabs[(i+1)%tabs.length];
+        if(e.key==='ArrowUp'||e.key==='ArrowLeft') n=tabs[(i-1+tabs.length)%tabs.length];
+        if(n){e.preventDefault();n.focus();select(n)}
+      });
+    });
+  });
+  var btn=document.getElementById('themeBtn'),root=document.documentElement;
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':mq.matches}
+  function paint(){var d=isDark();btn.textContent=d?'Light mode':'Dark mode';btn.setAttribute('aria-pressed',d)}
+  btn.addEventListener('click',function(){root.setAttribute('data-theme',isDark()?'light':'dark');paint()});
+  paint();
+})();
+</script>
+</body>
+</html>
